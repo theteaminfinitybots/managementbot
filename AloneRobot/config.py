@@ -11,7 +11,7 @@ class Config(object):
     
     SUPPORT_CHAT = "snowy_hometown"  # Your own group for support, do not add the @
     START_IMG = "https://files.catbox.moe/400vh1.jpg"
-    EVENT_LOGS = (-1003468243393)  # Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
+    EVENT_LOGS = (-1003633844538)  # Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
     MONGO_DB_URI= "mongodb+srv://knight4563:knight4563@cluster0.a5br0se.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     # RECOMMENDED
     DATABASE_URL = ""  # A sql database url from elephantsql.com
