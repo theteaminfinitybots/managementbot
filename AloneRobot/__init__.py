@@ -41,7 +41,9 @@ if ENV:
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
     ALLOW_EXCL = os.environ.get("ALLOW_EXCL", False)
     CASH_API_KEY = os.environ.get("CASH_API_KEY", None)
-    DB_URI = os.environ.get("DATABASE_URL")
+    DB_URI = os.getenv("DATABASE_URL")
+if not DB_URI or DB_URI.strip() == "":
+    DB_URI = "sqlite:///alonerobot.db"
     DEL_CMDS = bool(os.environ.get("DEL_CMDS", False))
     EVENT_LOGS = os.environ.get("EVENT_LOGS", None)
     INFOPIC = bool(os.environ.get("INFOPIC", "True"))
