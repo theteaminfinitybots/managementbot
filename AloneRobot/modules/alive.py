@@ -19,12 +19,13 @@ PHOTO = [
 
 Alone = [
     [
-        InlineKeyboardButton(text="ᴏᴡɴᴇʀ", user_id=OWNER_ID),
-        InlineKeyboardButton(text="ꜱᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"),
+        InlineKeyboardButton(text="👑 ᴏᴡɴᴇʀ", user_id=OWNER_ID),
+        InlineKeyboardButton(text="🛠️ ꜱᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"),
+        InlineKeyboardButton(text="🌙 Uᴘᴘᴇʀ ᴍᴏᴏɴ", url=f"https://t.me/dark_musictm"),
     ],
     [
         InlineKeyboardButton(
-            text="➕ᴀᴅᴅ ᴍᴇ ᴇʟsᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ➕",
+            text="✦ᴀᴅᴅ ᴍᴇ ᴇʟsᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ✦",
             url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
         ),
     ],
@@ -54,7 +55,7 @@ async def restart(client, m: Message):
         START_IMG,
         caption=f"""**ʜᴇʏ, ɪ ᴀᴍ 『[{BOT_NAME}](f"t.me/{BOT_USERNAME}")』**
    ━━━━━━━━━━━━━━━━━━━
-  » **ᴍʏ ᴏᴡɴᴇʀ :** [𝚴 𝐎 𝐁 𝚰 𝐓 𝚲](tg://user?id={OWNER_ID})
+  » **ᴍʏ ᴏᴡɴᴇʀ :** [ Uᴘᴘᴇʀ ᴍᴏᴏɴ](tg://user?id={OWNER_ID})
   
   » **ʟɪʙʀᴀʀʏ ᴠᴇʀsɪᴏɴ :** `{lver}`
   
