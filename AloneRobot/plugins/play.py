@@ -5,22 +5,22 @@ from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
-from Spy import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
-from Spy.core.call import Sagar
-from Spy.utils import seconds_to_min, time_to_seconds
-from Spy.utils.channelplay import get_channeplayCB
-from Spy.utils.decorators.language import languageCB
-from Spy.utils.decorators.play import PlayWrapper
-from Spy.utils.formatters import formats
-from Spy.utils.inline import (
+from AloneRobot import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
+from AloneRobot.core.call import Parth
+from AloneRobot.utils import seconds_to_min, time_to_seconds
+from AloneRobot.utils.channelplay import get_channeplayCB
+from AloneRobot.utils.decorators.language import languageCB
+from AloneRobot.utils.decorators.play import PlayWrapper
+from AloneRobot.utils.formatters import formats
+from AloneRobot.utils.inline import (
     botplaylist_markup,
     livestream_markup,
     playlist_markup,
     slider_markup,
     track_markup,
 )
-from Spy.utils.logger import play_logs
-from Spy.utils.stream.stream import stream
+from AloneRobot.utils.logger import play_logs
+from AloneRobot.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
 
 
@@ -395,6 +395,7 @@ async def play_commnd(
             await mystic.delete()
             await message.reply_photo(
                 photo=img,
+                has_spoiler=true,
                 caption=cap,
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
@@ -668,3 +669,4 @@ async def slider_queries(client, CallbackQuery, _):
         return await CallbackQuery.edit_message_media(
             media=med, reply_markup=InlineKeyboardMarkup(buttons)
         )
+
