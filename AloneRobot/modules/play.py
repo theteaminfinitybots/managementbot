@@ -5,7 +5,7 @@ from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
-from AloneRobot import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
+from AloneRobot.utils import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
 from AloneRobot.utils.call import Parth
 from AloneRobot.utils import seconds_to_min, time_to_seconds
 from AloneRobot.utils.channelplay import get_channeplayCB
