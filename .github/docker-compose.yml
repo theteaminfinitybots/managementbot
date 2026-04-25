@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  nobita:
+  infinity:
     build: .
-    container_name: nobita_bot
+    container_name: infinity_db
     restart: always
     env_file:
       - .env
@@ -14,16 +14,16 @@ services:
     ports:
       - "9091:9091"   # 👈 custom port (no 8080)
     environment:
-      - DATABASE_URL=postgresql://nobita:strongpass@postgres:5544/nobita_db
+      - DATABASE_URL=postgresql://infinity:strongpass@postgres:5544/infinity_db
 
   postgres:
     image: postgres:15
-    container_name: nobita_postgres
+    container_name: infinity_postgres
     restart: always
     environment:
-      POSTGRES_USER: nobita
+      POSTGRES_USER: infinity
       POSTGRES_PASSWORD: strongpass
-      POSTGRES_DB: nobita_db
+      POSTGRES_DB: infinitt_db
     command: -p 5544   # 👈 postgres internal port bhi change
     ports:
       - "5544:5544"    # 👈 no 5432 anywhere
