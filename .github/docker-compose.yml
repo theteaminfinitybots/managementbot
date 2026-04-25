@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  nobita:
+    build: .
+    container_name: nobita_bot
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    container_name: nobita_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
