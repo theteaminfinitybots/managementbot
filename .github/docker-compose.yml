@@ -10,18 +10,25 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - mongo
+      - postgres
     ports:
-      - "9090:8080"  # 👈 host:container
+      - "9091:9091"   # 👈 custom port (no 8080)
+    environment:
+      - DATABASE_URL=postgresql://nobita:strongpass@postgres:5544/nobita_db
 
-  mongo:
-    image: mongo:6
-    container_name: nobita_mongo
+  postgres:
+    image: postgres:15
+    container_name: nobita_postgres
     restart: always
+    environment:
+      POSTGRES_USER: nobita
+      POSTGRES_PASSWORD: strongpass
+      POSTGRES_DB: nobita_db
+    command: -p 5544   # 👈 postgres internal port bhi change
     ports:
-      - "28017:27017"
+      - "5544:5544"    # 👈 no 5432 anywhere
     volumes:
-      - mongo_data:/data/db
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  mongo_data:
+  postgres_data:
