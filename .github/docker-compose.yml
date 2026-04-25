@@ -11,13 +11,15 @@ services:
       - .:/app
     depends_on:
       - mongo
+    ports:
+      - "9090:8080"  # 👈 host:container
 
   mongo:
     image: mongo:6
     container_name: nobita_mongo
     restart: always
     ports:
-      - "27017:27017"
+      - "28017:27017"
     volumes:
       - mongo_data:/data/db
 
