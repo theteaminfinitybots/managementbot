@@ -7,11 +7,11 @@ class Config(object):
     API_ID = "37467897" # integer value, dont use ""
     API_HASH = "b1c9ba3d6180a099e35d6498d8434bf0"
     TOKEN = ""  # This var used to be API_KEY but it is now TOKEN, adjust accordingly.
-    OWNER_ID = 7651303468 # If you dont know, run the bot and do /id in your private chat with it, also an integer
+    OWNER_ID = 8364692780 # If you dont know, run the bot and do /id in your private chat with it, also an integer
     
     SUPPORT_CHAT = "snowy_hometown"  # Your own group for support, do not add the @
     START_IMG = "https://files.catbox.moe/400vh1.jpg"
-    EVENT_LOGS = (-1003633844538)  # Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
+    EVENT_LOGS = (-1003882647583)  # Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
     MONGO_DB_URI= "mongodb+srv://knight4563:knight4563@cluster0.a5br0se.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     # RECOMMENDED
     DATABASE_URL = ""  # A sql database url from elephantsql.com
