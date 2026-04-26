@@ -314,12 +314,16 @@ def help_button(update, context):
                 )
                 + HELPABLE[module].__help__
             )
-            query.message.edit_caption(text,
-                parse_mode=ParseMode.MARKDOWN,
-                
-                reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton(text="ʙᴀᴄᴋ", callback_data="help_back"),InlineKeyboardButton(text="sᴜᴘᴘᴏʀᴛ", callback_data="alone_support")]]
-                ),
+            query.message.delete()
+            context.bot.send_photo(
+              chat_id=query.message.chat.id, 
+              photo=START_IMG,
+              caption=text,
+              parse_mode=ParseMode.MARKDOWN,
+              reply_markup=InlineKeyboardMarkup(
+                [
+                   InlineKeyboardButton(text="ʙᴀᴄᴋ", callback_data="help_back"),
+                ]
             )
 
         elif prev_match:
