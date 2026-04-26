@@ -1,3 +1,4 @@
+from pyrogram import filters
 
 class Config(object):
     LOGGER = True
@@ -41,6 +42,8 @@ class Config(object):
     TEMP_DOWNLOAD_DIRECTORY = "./"
     WORKERS = 8
     
+
+BANNED_USERS = filters.user()
 
 class Production(Config):
     LOGGER = True
