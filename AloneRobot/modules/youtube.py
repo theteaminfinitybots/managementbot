@@ -9,7 +9,7 @@ from pyrogram.types import Message
 from py_yt import VideosSearch 
 from AloneRobot.modules.formatters import time_to_seconds
 import aiohttp
-from AloneRobot.modules import LOGGER
+from AloneRobot.modules.logging import LOGGER
 
 YOUR_API_URL = None
 FALLBACK_API_URL = "https://vercel.com/txkuzes-projects/admin-music-hub"
