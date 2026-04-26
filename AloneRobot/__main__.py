@@ -70,51 +70,36 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 PM_START_TEX = """
-ʜᴇʟʟᴏ `{}`, ʜᴏᴡ ᴀʀᴇ ʏᴏᴜ \nᴡᴀɪᴛ ᴀ ᴍᴏᴍᴇɴᴛ ʙʀᴏ . . . 
+ʜᴇʟʟᴏ `{}`, ʜᴏᴡ ᴀʀᴇ ʏᴏᴜ
+ᴡᴀɪᴛ ᴀ ᴍᴏᴍᴇɴᴛ ʙʀᴏ...
 """
 
 PM_START_TEXT = """
-> *нєу* {} 🥀✨  
->  
-> *๏ ɪ'ᴍ {} — ᴀɴ ᴀᴅᴠᴀɴᴄᴇᴅ ᴛᴇʟᴇɢʀᴀᴍ ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ 🤖🛡️*  
->  
-> *➻ ɪ ᴀᴍ ʜᴇʀᴇ ᴛᴏ ᴍᴀᴋᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘs sᴀғᴇʀ, sᴍᴀʀᴛᴇʀ ᴀɴᴅ ғᴀsᴛᴇʀ ⚡*  
->  
-> ━━━━━━━━━━━━━━━━━━  
-> *๏ 🔧 ᴡʜᴀᴛ ɪ ᴄᴀɴ ᴅᴏ ғᴏʀ ʏᴏᴜ*  
->  
-> *• 🛡️ ᴀɴᴛɪ-sᴘᴀᴍ & ᴀɴᴛɪ-ᴀʙᴜsᴇ ᴘʀᴏᴛᴇᴄᴛɪᴏɴ*  
-> *• 🚫 ᴀᴜᴛᴏ-ᴡᴀʀɴ, ᴍᴜᴛᴇ, ᴋɪᴄᴋ & ʙᴀɴ sʏsᴛᴇᴍ*  
-> *• 👥 ᴀᴅᴍɪɴ & ᴜsᴇʀ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ᴛᴏᴏʟs*  
-> *• 🔗 ʟɪɴᴋ, ғɪʟᴛᴇʀ & ᴍᴇᴅɪᴀ ᴄᴏɴᴛʀᴏʟ*  
-> *• ⚙️ ғᴜʟʟʏ ᴄᴜsᴛᴏᴍɪᴢᴀʙʟᴇ ᴍᴏᴅᴜʟᴇs*  
->  
-> ━━━━━━━━━━━━━━━━━━  
-> *๏ 📖 ɢᴇᴛ sᴛᴀʀᴛᴇᴅ*  
->  
-> *➻ ᴛᴀᴘ ᴛʜᴇ **ʜᴇʟᴘ** ʙᴜᴛᴛᴏɴ ᴛᴏ ᴇxᴘʟᴏʀᴇ ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs*  
-> *➻ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴍᴀᴋᴇ ᴍᴇ ᴀᴅᴍɪɴ ⭐*  
-> 🥀**ᴍᴀᴅᴇ ʙʏ💗:** [ ✦  Uᴘᴘᴇʀ ᴍᴏᴏɴ ](https://t.me/owner_of_itachi)
-> *✨ ʟᴇᴛ's ᴍᴀɴᴀɢᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘs ʟɪᴋᴇ ᴀ ᴘʀᴏ!*
+нєу {} 🥀✨
+ɪ'ᴍ {} — ᴀ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ + ᴍᴜsɪᴄ ʙᴏᴛ 🤖
+ᴀɴᴛɪ-sᴘᴀᴍ • ᴀᴅᴍɪɴ ᴛᴏᴏʟs • ᴍᴜsɪᴄ sᴛʀᴇᴀᴍɪɴɢ
+ᴛᴀᴘ ʜᴇʟᴘ ᴏʀ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ ⭐
+🥀 ᴍᴀᴅᴇ ʙʏ: [sɴᴏᴡʏ](https://t.me/deafen_ackerman)
 """
 
 buttons = [
     [
         InlineKeyboardButton(
-            text="✦Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ✦",
+            text="•ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ•",
             url=f"https://t.me/{dispatcher.bot.username}?startgroup=true",
         ),
     ],
     [
-        InlineKeyboardButton(text="🛠️ Hᴇʟᴘ & Cᴏᴍᴍᴀɴᴅs", callback_data="Main_help"),
+        InlineKeyboardButton(text="🛠️ ᴜᴛɪʟɪᴛʏ ʜᴜʙ", callback_data="Main_help"),
+        InlineKeyboardButton(text="🎶 ᴜᴘᴘᴇʀ ᴛᴜɴᴇs", url="https://uppermooninfinity.jo3.org"),
     ],
     [ 
-        InlineKeyboardButton(text="👑 Dᴇᴠᴇʟᴏᴘᴇʀ", url=f"tg://user?id={OWNER_ID}"),
+        InlineKeyboardButton(text="👑 ᴅᴇᴠ", url=f"tg://user?id={OWNER_ID}"),
         InlineKeyboardButton(text=f"🦋 Sᴜᴩᴩᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"),
     ],
     [
-        InlineKeyboardButton(text="🔗 Bᴏᴛ Iɴғᴏ", callback_data="alone_"),
-        InlineKeyboardButton(text="⛩️ Sᴏᴜʀᴄᴇ", callback_data="source_"),
+        InlineKeyboardButton(text="🔗 sʏs ɪɴғᴏ", callback_data="alone_"),
+        InlineKeyboardButton(text="⛩️ ᴏʀɪɢɪɴ", callback_data="source_"),
     ],
     
 
@@ -126,7 +111,7 @@ HELP_STRINGS = f"""
 DONATE_STRING = f"""ʜᴇʏ ʙᴀʙʏ,
   ʜᴀᴩᴩʏ ᴛᴏ ʜᴇᴀʀ ᴛʜᴀᴛ ʏᴏᴜ ᴡᴀɴɴᴀ ᴅᴏɴᴀᴛᴇ.
 
-ʏᴏᴜ ᴄᴀɴ ᴅɪʀᴇᴄᴛʟʏ ᴄᴏɴᴛᴀᴄᴛ ᴍʏ ᴅᴇᴠᴇʟᴏᴘᴇʀ @uchiha_owner ғᴏʀ ᴅᴏɴᴀᴛɪɴɢ ᴏʀ ʏᴏᴜ ᴄᴀɴ ᴠɪsɪᴛ ᴍʏ sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ @snowy_hometown ᴀɴᴅ ᴀsᴋ ᴛʜᴇʀᴇ ᴀʙᴏᴜᴛ ᴅᴏɴᴀᴛɪᴏɴ."""
+ʏᴏᴜ ᴄᴀɴ ᴅɪʀᴇᴄᴛʟʏ ᴄᴏɴᴛᴀᴄᴛ ᴍʏ ᴅᴇᴠᴇʟᴏᴘᴇʀ @deafen_ackerman ғᴏʀ ᴅᴏɴᴀᴛɪɴɢ ᴏʀ ʏᴏᴜ ᴄᴀɴ ᴠɪsɪᴛ ᴍʏ sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ @theinfinity_support ᴀɴᴅ ᴀsᴋ ᴛʜᴇʀᴇ ᴀʙᴏᴜᴛ ᴅᴏɴᴀᴛɪᴏɴ."""
 
 IMPORTED = {}
 MIGRATEABLE = []
