@@ -29,6 +29,11 @@
        "required": true,
        "value": ""
     },
+     "STRING_SESSIOB": {
+       "description": "Get this value from my.telegram.org/apps.",
+       "required": true,
+       "value": ""
+    },
     "ALLOW_EXCL": {
        "description": "Set this to True if you want ! to be a command prefix along with /. Recommended is True",
        "value": "True"
