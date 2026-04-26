@@ -7,16 +7,16 @@ import yt_dlp
 from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from py_yt import VideosSearch 
-from Oneforall.utils.formatters import time_to_seconds
+from AloneRobot.modules.formatters import time_to_seconds
 import aiohttp
-from Oneforall import LOGGER
+from AloneRobot.modules import LOGGER
 
 YOUR_API_URL = None
 FALLBACK_API_URL = "https://vercel.com/txkuzes-projects/admin-music-hub"
 
 async def load_api_url():
     global YOUR_API_URL
-    logger = LOGGER("Oneforall.platforms.Youtube.py")
+    logger = LOGGER("AloneRobot.modules.youtube.py")
 
     try:
         async with aiohttp.ClientSession() as session:
