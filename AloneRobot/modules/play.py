@@ -15,7 +15,7 @@ from pytgcalls.types.input_stream import AudioPiped
 
 from AloneRobot import pbot as app
 from AloneRobot.modules import Youtube
-from config import API_ID, API_HASH, STRING_SESSION, BANNED_USERS
+from AloneRobot.config import API_ID, API_HASH, STRING_SESSION, BANNED_USERS
 
 
 assistant = Client(
