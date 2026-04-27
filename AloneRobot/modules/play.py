@@ -1,18 +1,22 @@
 import asyncio
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto, CallbackQuery
+from pyrogram.types import (
+    Message,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    CallbackQuery,
+    InputMediaPhoto,
+)
 from pyrogram.enums import ChatMemberStatus
 
 from pytgcalls import PyTgCalls
 from pytgcalls.types.input_stream import AudioPiped
 
-from AloneRobot import app
+from AloneRobot import pbot as app
+from AloneRobot.modules.setter import Youtube
 from config import API_ID, API_HASH, STRING_SESSION, BANNED_USERS
 
-from AloneRobot.modules.youtube import YouTubeAPI
-
-yt = YouTubeAPI()
 
 assistant = Client(
     "assistant",
@@ -24,48 +28,53 @@ assistant = Client(
 call = PyTgCalls(assistant)
 
 QUEUE = {}
-AUTOPLAY = {}
 PLAYING = {}
+AUTOPLAY = {}
 
-CMD = ["play", "skip", "stop", "end", "pause", "resume", "reload"]
 PREFIX = ["/", "!", "."]
 
-def cmd_filter(cmd):
-    return filters.command(cmd, prefixes=PREFIX)
+def cmd(cmds):
+    return filters.command(cmds, prefixes=PREFIX)
+
+
+def is_admin(chat_id, user_id):
+    try:
+        member = app.get_chat_member(chat_id, user_id)
+        return member.status in [
+            ChatMemberStatus.OWNER,
+            ChatMemberStatus.ADMINISTRATOR,
+        ]
+    except:
+        return False
+
 
 def buttons(chat_id):
-    return InlineKeyboardMarkup(
+    return InlineKeyboardMarkup([
         [
-            [
-                InlineKeyboardButton("⏸", callback_data=f"pause|{chat_id}"),
-                InlineKeyboardButton("▶️", callback_data=f"resume|{chat_id}"),
-                InlineKeyboardButton("⏭", callback_data=f"skip|{chat_id}"),
-                InlineKeyboardButton("⏹", callback_data=f"stop|{chat_id}")
-            ],
-            [
-                InlineKeyboardButton("🔁 autoplay", callback_data=f"autoplay|{chat_id}")
-            ]
+            InlineKeyboardButton("⏸", callback_data=f"pause|{chat_id}"),
+            InlineKeyboardButton("▶️", callback_data=f"resume|{chat_id}"),
+            InlineKeyboardButton("⏭", callback_data=f"skip|{chat_id}"),
+            InlineKeyboardButton("⏹", callback_data=f"stop|{chat_id}")
         ]
-    )
+    ])
 
-async def is_admin(chat_id, user_id):
-    member = await app.get_chat_member(chat_id, user_id)
-    return member.status in [
-        ChatMemberStatus.OWNER,
-        ChatMemberStatus.ADMINISTRATOR
-    ]
-
-async def play_stream(chat_id, mystic=None):
+async def start_stream(chat_id, msg=None):
 
     if chat_id not in QUEUE or not QUEUE[chat_id]:
         return
 
     data = QUEUE[chat_id][0]
 
-    file, ok = await yt.download(data["link"], mystic)
-
-    if not ok:
+    try:
+        file = await YouTube.download(data["link"], msg)
+    except:
         return await app.send_message(chat_id, "❌ download failed")
+
+    # FIX: your youtube.py returns (file, True/False)
+    if isinstance(file, tuple):
+        file, ok = file
+        if not ok or not file:
+            return await app.send_message(chat_id, "❌ invalid file")
 
     try:
         await call.join_group_call(chat_id, AudioPiped(file))
@@ -74,195 +83,154 @@ async def play_stream(chat_id, mystic=None):
 
     PLAYING[chat_id] = data
 
-@app.on_message(cmd_filter("play") & filters.group & ~BANNED_USERS)
+
+async def next_song(chat_id):
+
+    if chat_id in QUEUE and QUEUE[chat_id]:
+        QUEUE[chat_id].pop(0)
+
+    if chat_id in QUEUE and QUEUE[chat_id]:
+        await start_stream(chat_id)
+        return True
+
+    return False
+
+@app.on_message(cmd("play") & filters.group & ~BANNED_USERS)
 async def play(_, message: Message):
 
     if len(message.command) < 2:
-        return await message.reply_text("➻ ᴜsᴇ /play song")
+        return await message.reply_text("➻ use /play song name")
 
     query = message.text.split(None, 1)[1]
 
-    msg = await message.reply_photo(
-        photo="https://graph.org/file/40f0822f02594343090cc-030776a6e3c7f31e9d.jpg",
-        caption="➻ ᴘʀᴏᴄᴇssɪɴɢ..."
-    )
+    msg = await message.reply_text("🎧 searching...")
 
     try:
-        data, vidid = await yt.track(query)
+        data, vid = await YouTube.track(query)
     except:
-        return await msg.edit_text("❌ error")
+        return await msg.edit("❌ failed to fetch")
 
     chat_id = message.chat.id
 
     QUEUE.setdefault(chat_id, []).append(data)
-
     pos = len(QUEUE[chat_id])
 
     if pos == 1:
-        await play_stream(chat_id, msg)
+        await start_stream(chat_id, msg)
 
-    caption = f"""
-➻ ᴛɪᴛʟᴇ: {data['title']}
-➻ ᴅᴜʀᴀᴛɪᴏɴ: {data['duration_min']}
-➻ ᴘᴏsɪᴛɪᴏɴ: {pos}
-➻ ʙʏ: {message.from_user.first_name}
+    await msg.edit_text(
+        f"""
+🎵 {data['title']}
+⏱ {data['duration_min']}
+📍 Position: {pos}
 """
+        )
 
-    await msg.edit_media(
-        InputMediaPhoto(
-            media=data["thumb"],
-            caption=caption
-        ),
-        reply_markup=buttons(chat_id)
-    )
-
-@app.on_message(cmd_filter("skip") & filters.group)
+@app.on_message(cmd(["skip"]) & filters.group)
 async def skip(_, message: Message):
-    if not await is_admin(message.chat.id, message.from_user.id):
-        return await message.reply_text("❌ admins only")
 
-    chat_id = message.chat.id
+    if not is_admin(message.chat.id, message.from_user.id):
+        return await message.reply_text("❌ admin only")
 
-    if len(QUEUE.get(chat_id, [])) <= 1:
+    if not await next_song(message.chat.id):
         return await message.reply_text("❌ no next song")
-
-    QUEUE[chat_id].pop(0)
-    await play_stream(chat_id)
 
     await message.reply_text("⏭ skipped")
 
 
-@app.on_message(cmd_filter("stop") & filters.group)
+@app.on_message(cmd(["stop"]) & filters.group)
 async def stop(_, message: Message):
-    if not await is_admin(message.chat.id, message.from_user.id):
-        return await message.reply_text("❌ admins only")
+
+    if not is_admin(message.chat.id, message.from_user.id):
+        return await message.reply_text("❌ admin only")
 
     chat_id = message.chat.id
-
     QUEUE[chat_id] = []
-    await call.leave_group_call(chat_id)
+
+    try:
+        await call.leave_group_call(chat_id)
+    except:
+        pass
 
     await message.reply_text("⏹ stopped")
 
 
-@app.on_message(cmd_filter("end") & filters.group)
-async def end(_, message: Message):
-    if not await is_admin(message.chat.id, message.from_user.id):
-        return await message.reply_text("❌ admins only")
-
-    chat_id = message.chat.id
-
-    QUEUE[chat_id] = []
-    await call.leave_group_call(chat_id)
-
-    await message.reply_text("⏹ queue ended")
-
-
-@app.on_message(cmd_filter("pause") & filters.group)
+@app.on_message(cmd(["pause"]) & filters.group)
 async def pause(_, message: Message):
-    if not await is_admin(message.chat.id, message.from_user.id):
-        return await message.reply_text("❌ admins only")
+    if not is_admin(message.chat.id, message.from_user.id):
+        return await message.reply_text("❌ admin only")
 
     await call.pause_stream(message.chat.id)
     await message.reply_text("⏸ paused")
 
 
-@app.on_message(cmd_filter("resume") & filters.group)
+@app.on_message(cmd(["resume"]) & filters.group)
 async def resume(_, message: Message):
-    if not await is_admin(message.chat.id, message.from_user.id):
-        return await message.reply_text("❌ admins only")
+    if not is_admin(message.chat.id, message.from_user.id):
+        return await message.reply_text("❌ admin only")
 
     await call.resume_stream(message.chat.id)
     await message.reply_text("▶️ resumed")
-
-
-@app.on_message(cmd_filter("reload") & filters.group)
-async def reload(_, message: Message):
-    if not await is_admin(message.chat.id, message.from_user.id):
-        return await message.reply_text("❌ admins only")
-
-    QUEUE.clear()
-    AUTOPLAY.clear()
-    PLAYING.clear()
-
-    await message.reply_text("🔄 reloaded")
 
 @app.on_callback_query(filters.regex("pause"))
 async def cb_pause(_, q: CallbackQuery):
     await call.pause_stream(int(q.data.split("|")[1]))
     await q.answer("paused")
 
+
 @app.on_callback_query(filters.regex("resume"))
 async def cb_resume(_, q: CallbackQuery):
     await call.resume_stream(int(q.data.split("|")[1]))
     await q.answer("resumed")
 
+
 @app.on_callback_query(filters.regex("skip"))
 async def cb_skip(_, q: CallbackQuery):
+
     chat_id = int(q.data.split("|")[1])
 
-    if len(QUEUE.get(chat_id, [])) <= 1:
-        return await q.answer("no next", show_alert=True)
-
-    QUEUE[chat_id].pop(0)
-    await play_stream(chat_id)
-
+    await next_song(chat_id)
     await q.answer("skipped")
+
 
 @app.on_callback_query(filters.regex("stop"))
 async def cb_stop(_, q: CallbackQuery):
-    chat_id = int(q.data.split("|")[1])
 
+    chat_id = int(q.data.split("|")[1])
     QUEUE[chat_id] = []
-    await call.leave_group_call(chat_id)
+
+    try:
+        await call.leave_group_call(chat_id)
+    except:
+        pass
 
     await q.answer("stopped")
 
-@app.on_callback_query(filters.regex("autoplay"))
-async def cb_autoplay(_, q: CallbackQuery):
-    chat_id = int(q.data.split("|")[1])
-
-    AUTOPLAY[chat_id] = not AUTOPLAY.get(chat_id, False)
-
-    await q.answer(f"autoplay {'on' if AUTOPLAY[chat_id] else 'off'}")
 
 @call.on_stream_end()
 async def stream_end(_, update):
+
     chat_id = update.chat_id
 
-    if chat_id in QUEUE and QUEUE[chat_id]:
-        QUEUE[chat_id].pop(0)
+    if await next_song(chat_id):
+        return
 
-    if chat_id in QUEUE and QUEUE[chat_id]:
-        await play_stream(chat_id)
+    if AUTOPLAY.get(chat_id):
+        results = await YouTube.search("music trending songs", limit=5)
 
-    elif AUTOPLAY.get(chat_id):
+        if results:
+            data = {
+                "title": results[0]["title"],
+                "duration_min": results[0]["duration"],
+                "link": results[0]["link"],
+                "thumb": results[0]["thumbnails"][0]["url"],
+            }
 
-        results = await yt.search("trending songs", limit=5)
+            QUEUE.setdefault(chat_id, []).append(data)
+            await start_stream(chat_id)
+            return
 
-        data = {
-            "title": results[0]["title"],
-            "duration_min": results[0]["duration"],
-            "link": results[0]["link"],
-            "thumb": results[0]["thumbnails"][0]["url"]
-        }
-
-        QUEUE.setdefault(chat_id, []).append(data)
-
-        await play_stream(chat_id)
-
-    else:
+    try:
         await call.leave_group_call(chat_id)
-
-        try:
-            await app.send_message(chat_id, "➻ stream ended no queued chats !")
-        except:
-            pass
-
-
-async def start():
-    await assistant.start()
-    await call.start()
-
-asyncio.get_event_loop().run_until_complete(start())
-
+    except:
+        pass
