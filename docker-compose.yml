@@ -1,0 +1,40 @@
+services:
+  bot:
+    container_name: telegram_music_bot
+    image: python:3.10-slim
+    restart: always
+    working_dir: /app
+
+    ports:
+      - "9090:9090"  # custom port (tu chahe toh change kar)
+
+    volumes:
+      - .:/app
+
+    command: >
+      bash -c "
+      pip install --no-cache-dir -r requirements.txt &&
+      python -m AloneRobot
+      "
+
+    environment:
+      # REQUIRED
+      API_ID: 37467897
+      API_HASH: b1c9ba3d6180a099e35d6498d8434bf0
+      TOKEN: ""  # yaha apna bot token daal
+      OWNER_ID: 8364692780
+
+      SUPPORT_CHAT: theinfinfinity_support
+      START_IMG: https://graph.org/file/5bf10b670c93c624af3e0-6d476603a36e8052b0.jpg
+      EVENT_LOGS: -1003882647583
+
+      MONGO_DB_URI: mongodb+srv://knight4563:knight4563@cluster0.a5br0se.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+      # OPTIONAL
+      DATABASE_URL: ""
+      CASH_API_KEY: ""
+      STRING_SESSION: ""
+      TIME_API_KEY: ""
+      CHATBOT_API: ""
+
+      WORKERS: 8
