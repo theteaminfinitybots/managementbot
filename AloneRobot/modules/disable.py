@@ -18,7 +18,7 @@ from AloneRobot.modules.helper_funcs.misc import is_module_loaded
 
 FILENAME = __name__.rsplit(".", 1)[-1]
 
-# If module is due to be loaded, then setup all the magical handlers
+# module is all setup if it isnt then update via claude or any other assistant must be loadedor delete 
 if is_module_loaded(FILENAME):
 
 
