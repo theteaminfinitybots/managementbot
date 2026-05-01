@@ -7,63 +7,60 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from telegram import __version__ as lver
 from telethon import __version__ as tver
 
-from AloneRobot import SUPPORT_CHAT, pbot,BOT_USERNAME, OWNER_ID,BOT_NAME,START_IMG
+from AloneRobot import SUPPORT_CHAT, pbot, BOT_USERNAME, OWNER_ID, BOT_NAME
 
+# only 2 photos
 PHOTO = [
-    "https://telegra.ph/file/d2a23fbe48129a7957887.jpg",
-    "https://telegra.ph/file/ddf30888de58d77911ee1.jpg",
-    "https://telegra.ph/file/268d66cad42dc92ec65ca.jpg",
-    "https://telegra.ph/file/13a0cbbff8f429e2c59ee.jpg",
-    "https://telegra.ph/file/bdfd86195221e979e6b20.jpg",
+    "https://graph.org/file/0b1f83450b59a65004800-5fd68e26d8fcc38fed.jpg",
+    "https://graph.org/file/5bf10b670c93c624af3e0-6d476603a36e8052b0.jpg",
 ]
 
 Alone = [
     [
         InlineKeyboardButton(text="👑 ᴏᴡɴᴇʀ", user_id=OWNER_ID),
         InlineKeyboardButton(text="🛠️ ꜱᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"),
-        InlineKeyboardButton(text="🌙 Uᴘᴘᴇʀ ᴍᴏᴏɴ", url=f"https://t.me/dark_musictm"),
+        InlineKeyboardButton(text="🌙 ᴜᴘᴘᴇʀ ᴍᴏᴏɴ", url="https://t.me/dark_musictm"),
     ],
     [
         InlineKeyboardButton(
-            text="✦ᴀᴅᴅ ᴍᴇ ᴇʟsᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ✦",
+            text="• ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ •",
             url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
         ),
     ],
 ]
 
 
-
 @pbot.on_message(filters.command("alive"))
 async def restart(client, m: Message):
     await m.delete()
-    accha = await m.reply("⚡")
-    await asyncio.sleep(0.2)
-    await accha.edit("ᴅɪɴɢ ᴅᴏɴɢ ꨄ︎ ᴀʟɪᴠɪɴɢ..")
-    await asyncio.sleep(0.1)
-    await accha.edit("ᴅɪɴɢ ᴅᴏɴɢ ꨄ︎ ᴀʟɪᴠɪɴɢ......")
-    await asyncio.sleep(0.1)
-    await accha.edit("ᴅɪɴɢ ᴅᴏɴɢ ꨄ︎ ᴀʟɪᴠɪɴɢ..")
 
-    await accha.delete()
-    await asyncio.sleep(0.3)
-    umm = await m.reply_sticker(
-        "CAACAgUAAxkDAAJHbmLuy2NEfrfh6lZSohacEGrVjd5wAAIOBAACl42QVKnra4sdzC_uKQQ"
-    )
-    await umm.delete()
+    msg = await m.reply("⚡")
     await asyncio.sleep(0.2)
+    await msg.edit("ᴅɪɴɢ ᴅᴏɴɢ ꨄ ᴀʟɪᴠᴇ...")
+    await asyncio.sleep(0.2)
+    await msg.edit("ᴅɪɴɢ ᴅᴏɴɢ ꨄ ᴀʟɪᴠᴇ......")
+    await asyncio.sleep(0.2)
+    await msg.delete()
+
+    # send photo (random from 2)
+    import random
+    img = random.choice(PHOTO)
+
     await m.reply_photo(
-        START_IMG,
-        caption=f"""**ʜᴇʏ, ɪ ᴀᴍ 『[{BOT_NAME}](f"t.me/{BOT_USERNAME}")』**
-   ━━━━━━━━━━━━━━━━━━━
-  » **ᴍʏ ᴏᴡɴᴇʀ :** [ Uᴘᴘᴇʀ ᴍᴏᴏɴ](tg://user?id={OWNER_ID})
-  
-  » **ʟɪʙʀᴀʀʏ ᴠᴇʀsɪᴏɴ :** `{lver}`
-  
-  » **ᴛᴇʟᴇᴛʜᴏɴ ᴠᴇʀsɪᴏɴ :** `{tver}`
-  
-  » **ᴘʏʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ :** `{pver}`
-  
-  » **ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴ :** `{pyver()}`
-   ━━━━━━━━━━━━━━━━━━━""",
+        photo=img,
+        caption=f"""
+**ʜᴇʏ, ɪ ᴀᴍ 『[{BOT_NAME}](https://t.me/{BOT_USERNAME})』**
+
+━━━━━━━━━━━━━━━━━━━
+» ᴏᴡɴᴇʀ : [ᴜᴘᴘᴇʀ ᴍᴏᴏɴ](tg://user?id={OWNER_ID})
+
+» ʟɪʙʀᴀʀʏ : `{lver}`
+» ᴛᴇʟᴇᴛʜᴏɴ : `{tver}`
+» ᴘʏʀᴏɢʀᴀᴍ : `{pver}`
+» ᴘʏᴛʜᴏɴ : `{pyver()}`
+━━━━━━━━━━━━━━━━━━━
+
+✧ ʙᴏᴛ ɪꜱ ʀᴜɴɴɪɴɢ ꜱᴍᴏᴏᴛʜʟʏ ✧
+""",
         reply_markup=InlineKeyboardMarkup(Alone),
     )
