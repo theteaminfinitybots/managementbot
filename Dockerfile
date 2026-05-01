@@ -21,7 +21,7 @@ RUN pip install --upgrade pip setuptools wheel
 
 # Clone your bot
 WORKDIR /root
-RUN git clone https://github.com/theinfinitybots/managemenbot.git
+RUN git clone https://github.com/theteinfinitybots/managemenbot.git
 
 WORKDIR /root/AloneRobot
 
