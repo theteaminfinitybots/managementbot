@@ -22,12 +22,12 @@
     "API_ID": {
        "description": "Get this value from my.telegram.org/apps.",
        "required": true,
-       "value": ""
+       "value": "35671904"
     },
     "API_HASH": {
        "description": "Get this value from my.telegram.org/apps.",
        "required": true,
-       "value": ""
+       "value": "426528d023de28da4cdea9dc72fc149e"
     },
      "STRING_SESSION": {
        "description": "Get this value from my.telegram.org/apps.",
@@ -60,7 +60,7 @@
     "MONGO_DB_URI": {
        "description": "Required for database connections.",
        "required": true,
-       "value": ""
+       "value": "mongodb+srv://knight4563:knight4563@cluster0.a5br0se.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     },
     "CASH_API_KEY": {
         " description": " Get your API key from https://www.alphavantage.co/support/#api-key",
@@ -81,17 +81,17 @@
     "OWNER_ID": {
        "description": "Your user ID as an integer.",
        "required": true,
-       "value": "5536473064"
+       "value": "8492331329"
     },
     "START_IMG": {
        "description": "Telegraph link of the image which will be shown at start command.",
        "required": true,
-       "value": ""
+       "value": "https://graph.org/file/0b1f83450b59a65004800-5fd68e26d8fcc38fed.jpg" 
     },
     "SUPPORT_CHAT": {
        "description": "Your Telegram support group chat username where your users will go and bother you with shit Example - AlonesHeaven.",
        "required": true,
-       "value": ""
+       "value": "theinfinity_support"
     },
     "TOKEN": {
        "description": "Get bot token from @BotFather on TG",
