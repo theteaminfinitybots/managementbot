@@ -1,79 +1,35 @@
-# We're using Debian Slim Buster image
-FROM python:3.8.5-slim-buster
+# Use stable modern base (no buster issues)
+FROM python:3.10-slim
 
-ENV PIP_NO_CACHE_DIR 1
+ENV PIP_NO_CACHE_DIR=1
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
-
-# Installing Required Packages
-RUN apt update && apt upgrade -y && \
-    apt install --no-install-recommends -y \
-    debian-keyring \
-    debian-archive-keyring \
-    bash \
-    bzip2 \
-    curl \
-    figlet \
+# Install only required system packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
-    util-linux \
-    libffi-dev \
-    libjpeg-dev \
-    libjpeg62-turbo-dev \
-    libwebp-dev \
-    linux-headers-amd64 \
-    musl-dev \
-    musl \
-    neofetch \
-    php-pgsql \
-    python3-lxml \
-    postgresql \
-    postgresql-client \
-    python3-psycopg2 \
-    libpq-dev \
-    libcurl4-openssl-dev \
-    libxml2-dev \
-    libxslt1-dev \
-    python3-pip \
-    python3-requests \
-    python3-sqlalchemy \
-    python3-tz \
-    python3-aiohttp \
-    openssl \
-    pv \
-    jq \
-    wget \
-    python3 \
-    python3-dev \
-    libreadline-dev \
-    libyaml-dev \
-    gcc \
-    sqlite3 \
-    libsqlite3-dev \
-    sudo \
-    zlib1g \
+    curl \
     ffmpeg \
+    libffi-dev \
     libssl-dev \
-    libgconf-2-4 \
-    libxi6 \
-    xvfb \
-    unzip \
-    libopus0 \
-    libopus-dev \
-    && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
+    libpq-dev \
+    gcc \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Pypi package Repo upgrade
-RUN pip3 install --upgrade pip setuptools
+# Upgrade pip
+RUN pip install --upgrade pip setuptools wheel
 
-RUN git clone https://github.com/Noob-Alone/AloneRobot /root/AloneRobot
+# Clone your bot
+WORKDIR /root
+RUN git clone https://github.com/Noob-Alone/AloneRobot.git
+
 WORKDIR /root/AloneRobot
 
-#Copy config file to /root/AloneRobot/AloneRobot
-COPY ./AloneRobot/config.py ./AloneRobot/config.py* /root/AloneRobot/AloneRobot/
+# (Optional) copy your custom config if exists
+COPY ./AloneRobot/config.py /root/AloneRobot/AloneRobot/config.py
 
-ENV PATH="/home/bot/bin:$PATH"
+# Install Python deps
+RUN pip install -r requirements.txt
 
-# Install requirements
-RUN pip3 install -U -r requirements.txt
-
-# Starting Worker
-CMD ["python3","-m","AloneRobot"]
+# Start bot
+CMD ["python", "-m", "AloneRobot"]
