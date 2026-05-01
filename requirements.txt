@@ -30,7 +30,7 @@ markdown2==2.5.0
 MukeshAPI
 motor==3.6.0
 nekos.py
-ntgcalls==1.1.2
+ntgcalls==2.1.0
 opencv-python
 pretty-errors
 pydictionary==2.0.1
