@@ -2,7 +2,7 @@ aiohttp
 aiofiles==24.1.0
 apscheduler==3.11.0
 beautifulsoup4==4.13.5
-bleach==6.2.0
+bleach==6.3.0
 bs4==0.0.2
 cachetools==4.2.2
 countryinfo==0.1.2
