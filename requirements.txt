@@ -4,7 +4,7 @@ apscheduler==3.11.0
 beautifulsoup4==4.13.5
 bleach==6.2.0
 bs4==0.0.2
-cachetools==4.2.2
+cachetools==7.1.1
 countryinfo==0.1.2
 emoji==2.15.0
 emoji-country-flag==2.0.1
